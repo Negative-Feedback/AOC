@@ -27,10 +27,32 @@ for line in open("area.txt"):
                 material[r][c] = 'X'
 
 
-# loop through the array and count the number of overlaps (# of x's)
-for r in range(1000):
-    for c in range(1000):
-        if material[r][c] == 'X':
-            total_overlap +=1
 
-print(total_overlap)
+for line in open("area.txt"):
+    overlap = False
+    line = line.split() #split the line on whitespace. this creates 4 parts
+
+    id = int(line[0][1:]) # get id, strip the '#' char and then convert to int
+    col, row = line[2].split(',') # split the rows and cols on the ','
+    # convert to ints
+    col = int(col)
+    row = int(row[:-1]) # remove the ':'
+    # same deal here
+    col_offset, row_offset = line[3].split('x')
+    col_offset = int(col_offset)
+    row_offset = int(row_offset)
+    end_col = col + col_offset
+    end_row = row + row_offset
+
+    for r in range(row,end_row):
+        for c in range(col, end_col):
+
+            # if the space has not been claimed place the id down
+            if material[r][c] == id:
+                pass
+
+            else:
+                overlap = True
+
+    if overlap == False:
+        print(id)
