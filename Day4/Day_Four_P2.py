@@ -8,12 +8,11 @@ ids = [] # array to hold the ids
 
 numbers = re.compile('\d+(?:\.\d+)?')# regex to strip the ids from the text
 
-file = open('sleep.txt', 'r')
+file = open('sorted_sleep.txt', 'r')
 
 for i, line in enumerate(file):
-
-    date = datetime.strptime(line[1:17], '%Y-%m-%d %H:%M:%S')
-    string = line[19:]
+    date = datetime.strptime(line[:19], '%Y-%m-%d %H:%M:%S')
+    string = line[20:]
     if re.search("^Guard #[0-9]{3,4} begins shift$", string):
         id = numbers.findall(string)
         id = int(id[-1])
@@ -26,15 +25,4 @@ for i, line in enumerate(file):
 
 file.close()
 
-arr = sorted(arr, key=lambda dates: dates[0])
-sp.part_one(arr, ids)
-
-
-# this was to convert the sorted array to a file
-# i did this because i had a feeling that the sorted list
-# would come in handy for the second part
-'''file = open("sorted_sleep.txt", "w+")
-for i in range(1056):
-    line = str(arr[i][0]) + ' ' + arr[i][1]
-    file.write(line)
-file.close()'''
+sp.part_two(arr, ids)
